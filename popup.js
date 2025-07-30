@@ -849,7 +849,14 @@ document.querySelector("#students-btn").addEventListener("click", async () => {
                         people["grader"].push(person_name)
                     }
                     else {
-                        people["students"].push(person_name)
+                        if (person['courseRoleId'] == "TeachingAssistant") {
+                            person_name = person['user']['name']['given'] + " " + person['user']['name']['family'] + " (TA)," + person['user']['avatar']['viewUrl']
+                            // console.log("TA", person_name)
+                            people["students"].push(person_name)
+                        }
+                        else {
+                            people["students"].push(person_name)
+                        }
                     }
                 })
 
@@ -865,7 +872,7 @@ document.querySelector("#students-btn").addEventListener("click", async () => {
                 }
                 
                 if (people.students.length > 0) {
-                    message += `<h3>Students:</h3>${people.students.map(element => `<li><a class="student-image" href="${element.split(",")[1]}" target="_blank">${element.split(",")[0]}</a></li>`).join("")}`;
+                    message += `<h3>Students (${people.students.length} total):</h3>${people.students.map(element => `<li><a class="student-image" href="${element.split(",")[1]}" target="_blank">${element.split(",")[0]}</a></li>`).join("")}`;
                 }
 
                 //~ HIDE IMAGES FOR NOW :P                
@@ -1026,6 +1033,7 @@ document.querySelector("#class-search-btn").addEventListener("click", async () =
     });
 
     current_term = response['term']
+    current_term = "2258"
 
     questionBox = document.createElement("div")
     questionBox.id = "questionBox"
@@ -1057,7 +1065,7 @@ document.querySelector("#class-search-btn").addEventListener("click", async () =
 
         classes = await new Promise((resolve, reject) => {
             chrome.runtime.sendMessage(
-                { action: "fetchSchedule", url: `https://canelink.miami.edu/psc/UMIACP1D/EMPLOYEE/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=MIAMI&term=2251&date_from=&date_thru=&subject=${classSubject}&subject_like=&catalog_nbr=${classCode}&start_time_equals=&start_time_ge=&end_time_equals=&end_time_le=&days=&campus=&location=&x_acad_career=UGRD&acad_group=&rqmnt_designtn=&instruction_mode=&keyword=&class_nbr=&acad_org=&enrl_stat=&crse_attr=&crse_attr_value=&instructor_name=&instr_first_name=&session_code=&units=&trigger_search=&page=1`, postUrl: "https://canelink.miami.edu:443/Shibboleth.sso/SAML2/POST", type: 'json' },
+                { action: "fetchSchedule", url: `https://canelink.miami.edu/psc/UMIACP1D/EMPLOYEE/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=MIAMI&term=${current_term}&date_from=&date_thru=&subject=${classSubject}&subject_like=&catalog_nbr=${classCode}&start_time_equals=&start_time_ge=&end_time_equals=&end_time_le=&days=&campus=&location=&x_acad_career=UGRD&acad_group=&rqmnt_designtn=&instruction_mode=&keyword=&class_nbr=&acad_org=&enrl_stat=&crse_attr=&crse_attr_value=&instructor_name=&instr_first_name=&session_code=&units=&trigger_search=&page=1`, postUrl: "https://canelink.miami.edu:443/Shibboleth.sso/SAML2/POST", type: 'json' },
                 (response) => {
                     if (response.success) {
                         resolve(response.response);
