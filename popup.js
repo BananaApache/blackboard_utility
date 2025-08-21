@@ -1286,7 +1286,7 @@ document.querySelector("#ongoing-btn").addEventListener("click", async () => {
         return
     }
 
-    fetch(chrome.runtime.getURL("data/classes_spring2025.json"))
+    fetch(chrome.runtime.getURL("data/classes_fall2025.json"))
     .then(response => response.json())
     .then(data => {
     let checkTime = new Date();
