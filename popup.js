@@ -961,27 +961,27 @@ document.querySelector("#students-btn").addEventListener("click", async () => {
 
                 message = ""
                 // SHOW IMAGES
-                if (people.instructor.length > 0) {
-                    message += `<h3>Instructor:</h3>${people.instructor.map(element => `<li><a class="student-image" href="${element.split(",")[1]}" target="_blank">${element.split(",")[0]}</a></li>`).join("")}`;
-                }
-                if (people.grader.length > 0) {
-                    message += `<h3>Grader:</h3>${people.grader.map(element => `<li><a class="student-image" href="${element.split(",")[1]}" target="_blank">${element.split(",")[0]}</a></li>`).join("")}`;
-                }
-                
-                if (people.students.length > 0) {
-                    message += `<h3>Students (${people.students.length} total):</h3>${people.students.map(element => `<li><a class="student-image" href="${element.split(",")[1]}" target="_blank">${element.split(",")[0]}</a></li>`).join("")}`;
-                }
-
-                //~ HIDE IMAGES FOR NOW :P                
                 // if (people.instructor.length > 0) {
-                //     message += `<h3>Instructor:</h3>${people.instructor.map(element => `<li>${element.split(",")[0]}</li>`).join("")}`;
+                //     message += `<h3>Instructor:</h3>${people.instructor.map(element => `<li><a class="student-image" href="${element.split(",")[1]}" target="_blank">${element.split(",")[0]}</a></li>`).join("")}`;
                 // }
                 // if (people.grader.length > 0) {
-                //     message += `<h3>Grader:</h3>${people.grader.map(element => `<li>${element.split(",")[0]}</li>`).join("")}`;
+                //     message += `<h3>Grader:</h3>${people.grader.map(element => `<li><a class="student-image" href="${element.split(",")[1]}" target="_blank">${element.split(",")[0]}</a></li>`).join("")}`;
                 // }
+                
                 // if (people.students.length > 0) {
-                //     message += `<h3>Students:</h3>${people.students.map(element => `<li>${element.split(",")[0]}</li>`).join("")}`;
+                //     message += `<h3>Students (${people.students.length} total):</h3>${people.students.map(element => `<li><a class="student-image" href="${element.split(",")[1]}" target="_blank">${element.split(",")[0]}</a></li>`).join("")}`;
                 // }
+
+                //~ HIDE IMAGES FOR NOW :P                
+                if (people.instructor.length > 0) {
+                    message += `<h3>Instructor:</h3>${people.instructor.map(element => `<li>${element.split(",")[0]}</li>`).join("")}`;
+                }
+                if (people.grader.length > 0) {
+                    message += `<h3>Grader:</h3>${people.grader.map(element => `<li>${element.split(",")[0]}</li>`).join("")}`;
+                }
+                if (people.students.length > 0) {
+                    message += `<h3>Students:</h3>${people.students.map(element => `<li>${element.split(",")[0]}</li>`).join("")}`;
+                }
 
                 
                 p = document.createElement("p")
