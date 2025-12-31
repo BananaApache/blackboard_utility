@@ -353,8 +353,12 @@ document.querySelector('#download-btn').addEventListener('click', async () => {
         folder = await folder.json()
         folder = folder['results']
 
+        console.log("FOLDER CONTENTS:")
+        console.log(folder)
+
         for (file of folder) {
             if (file['contentHandler'] == "resource/x-bb-file") {
+                console.log("file", file)
                 file_name = file['contentDetail']['resource/x-bb-file']['file']['fileName']
 
                 try {
@@ -372,10 +376,19 @@ document.querySelector('#download-btn').addEventListener('click', async () => {
                     console.error(error)
                 }
             }
-            else if (file['contentHandler'] == "resource/x-bb-document") {
+            else if (file['contentHandler'] == "resource/x-bb-document" || file['contentHandler'] == "resource/x-bb-assignment") {
+                console.log("document", file)
+                console.log(`https://www.courses.miami.edu/learn/api/public/v1/courses/${course_id}/contents/${file['id']}/attachments`);
+                
                 attachments = await fetch(`https://www.courses.miami.edu/learn/api/public/v1/courses/${course_id}/contents/${file['id']}/attachments`, { headers: headers })
                 attachments = await attachments.json()
                 attachments = attachments['results']
+
+                console.log(attachments)
+
+                if (attachments.length == 0) {
+                    continue
+                }
 
                 for (attachment of attachments) {
                     attachment_id = attachment['id']
@@ -400,6 +413,7 @@ document.querySelector('#download-btn').addEventListener('click', async () => {
                 }
             }
             else if (file['contentHandler'] == "resource/x-bb-folder") {
+                console.log("folder", file)
                 await recursiveFetch(headers, file, course_id)
             }
 
@@ -433,11 +447,15 @@ document.querySelector('#download-btn').addEventListener('click', async () => {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
         }
 
-        results = await fetch(`https://www.courses.miami.edu/learn/api/public/v1/courses/${course_id}/contents/`, { headers: headers })
-        results = await results.json()
-        results = results['results']
+        init_results = await fetch(`https://www.courses.miami.edu/learn/api/public/v1/courses/${course_id}/contents/`, { headers: headers })
+        init_results = await init_results.json()
+        init_results = init_results['results']
 
-        for (result of results) {
+        console.log(init_results)
+
+
+        // GET COURSE DOCUMENT STUFF
+        for (result of init_results) {
             if (result['title'] == "Course Documents") {
                 documents_id = result['id']
                 break
@@ -449,7 +467,7 @@ document.querySelector('#download-btn').addEventListener('click', async () => {
             results = await results.json()
             results = results['results']
         }
-        catch { }
+        catch { results = [] }
 
         for (result of results) {
             if (result['contentHandler'] == "resource/x-bb-folder") {
@@ -478,6 +496,85 @@ document.querySelector('#download-btn').addEventListener('click', async () => {
                 attachments = await fetch(`https://www.courses.miami.edu/learn/api/public/v1/courses/${course_id}/contents/${result['id']}/attachments`, { headers: headers })
                 attachments = await attachments.json()
                 attachments = attachments['results']
+
+                for (attachment of attachments) {
+                    attachment_id = attachment['id']
+
+                    download = await fetch(`https://www.courses.miami.edu/learn/api/public/v1/courses/${course_id}/contents/${result['id']}/attachments/${attachment_id}/download`, { headers: headers })
+                    blob = await download.blob()
+
+                    file_name = await fetch(`https://www.courses.miami.edu/learn/api/public/v1/courses/${course_id}/contents/${result['id']}/attachments/${attachment_id}`, { headers: headers })
+                    file_name = await file_name.json()
+                    file_name = file_name['fileName']
+
+                    if (file_name == "undefined") {
+                        file_name = attachment['fileName']
+                    }
+
+                    const downloadUrl = URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = downloadUrl;
+                    a.download = file_name;
+                    a.click();
+                    URL.revokeObjectURL(downloadUrl);
+                }
+            }
+
+            document.querySelector("#status").innerHTML += `<p class='log'>Downloaded ${file_name}</p>`
+            adjustBoxHeight(document.querySelector("p.log"))
+        }
+
+
+        // GET ASSIGNMENT DOCUMENT STUFF
+        for (result of init_results) {
+            if (result['title'] == "Assignments") {
+                assignments_id = result['id']
+                break
+            }
+        }
+
+        try {
+            results = await fetch(`https://www.courses.miami.edu/learn/api/v1/courses/${course_id}/contents/${assignments_id}/children`)
+            results = await results.json()
+            results = results['results']
+        }
+        catch { results = [] }
+
+        console.log("ASSIGNMENTS RESULTS:")
+        console.log(results)
+
+        for (result of results) {
+            if (result['contentHandler'] == "resource/x-bb-folder") {
+                console.log(result['title'] == "Homework", "HOMEWORK FOLDER")
+                await recursiveFetch(headers, result, course_id);
+                continue
+            }
+            else if (result['contentHandler'] == "resource/x-bb-file") {
+                file_name = result['contentDetail']['resource/x-bb-file']['file']['fileName']
+
+                try {
+                    download = await fetch(encodeURI("https://www.courses.miami.edu" + result['contentDetail']['resource/x-bb-file']['file']['permanentUrl'], { headers: headers }))
+                    blob = await download.blob()
+
+                    const downloadUrl = URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.href = downloadUrl;
+                    a.download = file_name;
+                    a.click();
+                    URL.revokeObjectURL(downloadUrl);
+                }
+                catch (error) {
+                    console.error(error)
+                }
+            }
+            else if (result['contentHandler'] == "resource/x-bb-document" || result['contentHandler'] == "resource/x-bb-assignment") {
+                attachments = await fetch(`https://www.courses.miami.edu/learn/api/public/v1/courses/${course_id}/contents/${result['id']}/attachments`, { headers: headers })
+                attachments = await attachments.json()
+                attachments = attachments['results']
+
+                if (attachments.length == 0) {
+                    continue
+                }
 
                 for (attachment of attachments) {
                     attachment_id = attachment['id']
