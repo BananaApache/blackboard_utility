@@ -5,7 +5,7 @@
     "manifest_version": 3,
     "action": {
       "default_popup": "popup.html",
-      "default_icon": "logo.png"
+      "default_icon": "um_logo.png"
     },
     "permissions": ["downloads", "activeTab", "scripting", "cookies", "storage", "webRequest", "declarativeNetRequest"],
     "host_permissions": ["https://www.developer.chrome.com/*", "https://www.courses.miami.edu/*", "https://canelink.miami.edu/*", "https://auth.miami.edu/*", "https://get.cbord.com/*", "https://alt-5a33ed4744755.blackboard.com/*", "https://www.ratemyprofessors.com/*", "https://postbox-express.vercel.app/*"],
