@@ -13,16 +13,32 @@ document.addEventListener('DOMContentLoaded', () => {
                         func: function () {
                             if (window.location.href.includes("outline")) {
                                 try {
-                                    const iframe = document.querySelector("div.panel-content > iframe");
+                                    const iframe = document.querySelector(".classic-learn-iframe");
+                                    console.log(iframe)
                                     if (iframe && iframe.contentDocument) {
                                         const courseNameElement = iframe.contentDocument.querySelector("#crumb_1");
+                                        // const newNameElement = iframe.contentDocument.querySelector('[data-analytics-id="course.header.course-title.button"]');
                                         if (courseNameElement) {
+                                        // if (newNameElement) {
                                             const fullName = courseNameElement.innerText;
-                                            const userName = document.querySelector("#sidebar-user-name > bb-ui-username > div > div > bdi").innerText;
-                                            console.log(userName);
+                                            // const fullName = newNameElement.innerText;
+                                            // const userName = document.querySelector("#sidebar-user-name > bb-ui-username > div > div > bdi").innerText;
+                                            // console.log(userName);
 
-                                            return fullName.split("-")[1].trim() + "|" + userName;
+                                            return fullName.split("-")[1].trim() + "|" + "NONE";
                                         }
+                                    }
+                                    else {
+                                        const newNameElement = document.querySelector('[data-analytics-id="course.header.course-title.button"]');
+                                        if (newNameElement) {
+                                            // const fullName = courseNameElement.innerText;
+                                            const fullName = newNameElement.innerText;
+                                            // const userName = document.querySelector("#sidebar-user-name > bb-ui-username > div > div > bdi").innerText;
+                                            // console.log(userName);
+
+                                            return fullName.split("-")[1].trim() + "|" + "NONE";
+                                        }
+
                                     }
                                 } catch (error) {
                                     console.error("Error extracting course name:", error);
@@ -961,27 +977,27 @@ document.querySelector("#students-btn").addEventListener("click", async () => {
 
                 message = ""
                 // SHOW IMAGES
-                // if (people.instructor.length > 0) {
-                //     message += `<h3>Instructor:</h3>${people.instructor.map(element => `<li><a class="student-image" href="${element.split(",")[1]}" target="_blank">${element.split(",")[0]}</a></li>`).join("")}`;
-                // }
-                // if (people.grader.length > 0) {
-                //     message += `<h3>Grader:</h3>${people.grader.map(element => `<li><a class="student-image" href="${element.split(",")[1]}" target="_blank">${element.split(",")[0]}</a></li>`).join("")}`;
-                // }
-                
-                // if (people.students.length > 0) {
-                //     message += `<h3>Students (${people.students.length} total):</h3>${people.students.map(element => `<li><a class="student-image" href="${element.split(",")[1]}" target="_blank">${element.split(",")[0]}</a></li>`).join("")}`;
-                // }
-
-                //~ HIDE IMAGES FOR NOW :P                
                 if (people.instructor.length > 0) {
-                    message += `<h3>Instructor:</h3>${people.instructor.map(element => `<li>${element.split(",")[0]}</li>`).join("")}`;
+                    message += `<h3>Instructor:</h3>${people.instructor.map(element => `<li><a class="student-image" href="${element.split(",")[1]}" target="_blank">${element.split(",")[0]}</a></li>`).join("")}`;
                 }
                 if (people.grader.length > 0) {
-                    message += `<h3>Grader:</h3>${people.grader.map(element => `<li>${element.split(",")[0]}</li>`).join("")}`;
+                    message += `<h3>Grader:</h3>${people.grader.map(element => `<li><a class="student-image" href="${element.split(",")[1]}" target="_blank">${element.split(",")[0]}</a></li>`).join("")}`;
                 }
+                
                 if (people.students.length > 0) {
-                    message += `<h3>Students:</h3>${people.students.map(element => `<li>${element.split(",")[0]}</li>`).join("")}`;
+                    message += `<h3>Students (${people.students.length} total):</h3>${people.students.map(element => `<li><a class="student-image" href="${element.split(",")[1]}" target="_blank">${element.split(",")[0]}</a></li>`).join("")}`;
                 }
+
+                //~ HIDE IMAGES FOR NOW :P                
+                // if (people.instructor.length > 0) {
+                //     message += `<h3>Instructor:</h3>${people.instructor.map(element => `<li>${element.split(",")[0]}</li>`).join("")}`;
+                // }
+                // if (people.grader.length > 0) {
+                //     message += `<h3>Grader:</h3>${people.grader.map(element => `<li>${element.split(",")[0]}</li>`).join("")}`;
+                // }
+                // if (people.students.length > 0) {
+                //     message += `<h3>Students:</h3>${people.students.map(element => `<li>${element.split(",")[0]}</li>`).join("")}`;
+                // }
 
                 
                 p = document.createElement("p")
@@ -1383,7 +1399,7 @@ document.querySelector("#ongoing-btn").addEventListener("click", async () => {
         return
     }
 
-    fetch(chrome.runtime.getURL("data/classes_fall2025.json"))
+    fetch(chrome.runtime.getURL("data/classes_spring2026.json"))
     .then(response => response.json())
     .then(data => {
     let checkTime = new Date();
