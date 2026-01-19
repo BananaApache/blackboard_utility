@@ -1178,7 +1178,7 @@ document.querySelector("#class-search-btn").addEventListener("click", async () =
 
         classes = await new Promise((resolve, reject) => {
             chrome.runtime.sendMessage(
-                { action: "fetchSchedule", url: `https://canelink.miami.edu/psc/UMIACP1D/EMPLOYEE/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=MIAMI&term=${current_term}&date_from=&date_thru=&subject=${classSubject}&subject_like=&catalog_nbr=${classCode}&start_time_equals=&start_time_ge=&end_time_equals=&end_time_le=&days=&campus=&location=&x_acad_career=UGRD&acad_group=&rqmnt_designtn=&instruction_mode=&keyword=&class_nbr=&acad_org=&enrl_stat=&crse_attr=&crse_attr_value=&instructor_name=&instr_first_name=&session_code=&units=&trigger_search=&page=1`, postUrl: "https://canelink.miami.edu:443/Shibboleth.sso/SAML2/POST", type: 'json' },
+                { action: "fetchSchedule", url: `https://canelink.miami.edu/psp/UMIACP1D/EMPLOYEE/SA/s/WEBLIB_HCX_CM.H_CLASS_SEARCH.FieldFormula.IScript_ClassSearch?institution=MIAMI&term=${current_term}&date_from=&date_thru=&subject=${classSubject}&subject_like=&catalog_nbr=${classCode}&start_time_equals=&start_time_ge=&end_time_equals=&end_time_le=&days=&campus=&location=&x_acad_career=UGRD&acad_group=&rqmnt_designtn=&instruction_mode=&keyword=&class_nbr=&acad_org=&enrl_stat=&crse_attr=&crse_attr_value=&instructor_name=&instr_first_name=&session_code=&units=&trigger_search=&page=1`, postUrl: "https://canelink.miami.edu:443/Shibboleth.sso/SAML2/POST", type: 'json' },
                 (response) => {
                     if (response.success) {
                         resolve(response.response);

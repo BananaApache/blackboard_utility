@@ -7,14 +7,35 @@ Blackboard Utility is a Chrome extension designed to bridge the gap between Blac
 ### Features
 
 * One-Click Course Download: Automatically finds and downloads all files and folders from a course. Includes submissions, assignments, course documents, syllabus!
+
+<img src="./images/sample5.png" width=400>
+
 * Assignment Backup: Downloads all previous assignment submissions for a local record
+
 * Professor Ratings: Shows RateMyProfessors scores directly on Blackboard and search pages
+
+<img src="./images/sample1.png" width=400>
+
 * Schedule Integration: Pulls daily class times and locations from CaneLink and display it inside extension
+
+<img src="./images/sample2.png" width=400>
+
 * Dining Dollars: Shows current meal plan balances without needing to log into a separate portal
 * Class Roster: Displays a list of students and instructors in the current course
+
+<img src="./images/sample7.png" width=400>
+
 * Overlap Finder: Identifies students who share multiple classes with the user
+
+<img src="./images/sample3.png" width=400>
+
 * Ongoing Classes: Uses a database to show what classes are happening on campus in real-time
+
+<img src="./images/sample4.png" width=400>
+
 * Class Search: Uses CaneLink to allow users to search for classes right inside of blackboard
+
+<img src="./images/sample6.png" width=400>
 
 ### Some design tradeoffs
 
