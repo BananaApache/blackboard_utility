@@ -1556,5 +1556,3 @@ function flattenBox() {
         document.querySelector(".output-box").style = "";
     }, 1000);
 }
-
-
