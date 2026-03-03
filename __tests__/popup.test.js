@@ -23,11 +23,11 @@ function convertToNormalTime(inputTime) {
 function formatTime(time) {
   const [hour, minute] = time.split('.');
   let hours = parseInt(hour);
-  let period = "AM";
+  let period = 'AM';
 
   if (hours >= 12) {
     hours = hours === 12 ? 12 : hours - 12;
-    period = "PM";
+    period = 'PM';
   } else if (hours === 0) {
     hours = 12;
   }
@@ -151,22 +151,22 @@ describe('popup.js - Date formatting', () => {
 describe('popup.js - Day conversion', () => {
   test('should convert day names to abbreviations', () => {
     const convertDay = {
-      "Monday": "mon",
-      "Tuesday": "tues",
-      "Wednesday": "wed",
-      "Thursday": "thurs",
-      "Friday": "fri",
-      "Saturday": "sat",
-      "Sunday": "sun"
+      'Monday': 'mon',
+      'Tuesday': 'tues',
+      'Wednesday': 'wed',
+      'Thursday': 'thurs',
+      'Friday': 'fri',
+      'Saturday': 'sat',
+      'Sunday': 'sun'
     };
 
-    expect(convertDay["Monday"]).toBe("mon");
-    expect(convertDay["Tuesday"]).toBe("tues");
-    expect(convertDay["Wednesday"]).toBe("wed");
-    expect(convertDay["Thursday"]).toBe("thurs");
-    expect(convertDay["Friday"]).toBe("fri");
-    expect(convertDay["Saturday"]).toBe("sat");
-    expect(convertDay["Sunday"]).toBe("sun");
+    expect(convertDay['Monday']).toBe('mon');
+    expect(convertDay['Tuesday']).toBe('tues');
+    expect(convertDay['Wednesday']).toBe('wed');
+    expect(convertDay['Thursday']).toBe('thurs');
+    expect(convertDay['Friday']).toBe('fri');
+    expect(convertDay['Saturday']).toBe('sat');
+    expect(convertDay['Sunday']).toBe('sun');
   });
 });
 
@@ -192,7 +192,7 @@ describe('popup.js - DOM Helper Functions', () => {
     
     // Mock adjustBoxHeight
     const adjustBoxHeight = (tag) => {
-      const outputBox = document.querySelector(".output-box");
+      const outputBox = document.querySelector('.output-box');
       if (isNaN(parseFloat(outputBox.style.maxHeight))) {
         const height = tag.scrollHeight + 200;
         outputBox.style.maxHeight = `${height}px`;
@@ -210,7 +210,7 @@ describe('popup.js - DOM Helper Functions', () => {
 
   test('flattenBox should set height to 10px', () => {
     const flattenBox = () => {
-      document.querySelector(".output-box").style.maxHeight = "10px";
+      document.querySelector('.output-box').style.maxHeight = '10px';
     };
     
     flattenBox();

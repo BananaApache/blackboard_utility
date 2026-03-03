@@ -27,7 +27,7 @@ function extractFormTokenValues(html) {
   const regex = /<input[^>]*id="formToken"[^>]*value="([^"]*)"/g;
   let match;
   while ((match = regex.exec(html)) !== null) {
-      tokens.push(match[1]);
+    tokens.push(match[1]);
   }
   return tokens;
 }
@@ -37,7 +37,7 @@ function extractOptionValues(html) {
   const regex = /<option[^>]*value="([^"]*)"/g;
   let match;
   while ((match = regex.exec(html)) !== null) {
-      options.push(match[1]);
+    options.push(match[1]);
   }
   return options;
 }
