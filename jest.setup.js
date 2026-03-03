@@ -2,30 +2,30 @@
 global.chrome = {
   runtime: {
     onMessage: {
-      addListener: jest.fn(),
+      addListener: jest.fn()
     },
     sendMessage: jest.fn(),
     getURL: jest.fn((path) => `chrome-extension://mock-id/${path}`),
-    lastError: null,
+    lastError: null
   },
   tabs: {
-    query: jest.fn(),
+    query: jest.fn()
   },
   storage: {
     local: {
       get: jest.fn(),
-      set: jest.fn(),
-    },
+      set: jest.fn()
+    }
   },
   cookies: {
-    getAll: jest.fn(),
+    getAll: jest.fn()
   },
   downloads: {
-    download: jest.fn(),
+    download: jest.fn()
   },
   scripting: {
-    executeScript: jest.fn(),
-  },
+    executeScript: jest.fn()
+  }
 };
 
 // Mock fetch
